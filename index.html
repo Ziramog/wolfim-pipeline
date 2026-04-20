@@ -31,30 +31,37 @@
     .action-card h3 { color: #fff; font-size: 1em; margin-bottom: 8px; }
     .action-card p { color: #888; font-size: 0.9em; line-height: 1.5; }
     .action-card .tag-inmobiliaria { background: #1a2a1a; color: #00f060; }
-    .update-form { background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 24px; margin-top: 40px; }
-    .update-form h2 { color: #fff; margin-bottom: 16px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-    .form-row.full { grid-template-columns: 1fr; }
-    label { display: block; color: #888; font-size: 0.8em; margin-bottom: 4px; }
-    input, select, textarea { width: 100%; padding: 10px 12px; background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 6px; color: #e0e0e0; font-size: 0.95em; }
-    input:focus, select:focus, textarea:focus { outline: none; border-color: #444; }
-    button { background: #25D366; color: #fff; border: none; padding: 12px 24px; border-radius: 6px; font-size: 0.95em; font-weight: 600; cursor: pointer; margin-top: 12px; }
-    button:hover { background: #1ebe5c; }
+    .action-card .tag-seguimiento { background: #1a1a2a; color: #6080f0; }
     .msg-box { background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 6px; padding: 12px; margin-top: 20px; font-family: monospace; font-size: 0.9em; color: #888; white-space: pre-wrap; }
     .legend { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
     .legend span { font-size: 0.85em; }
     .footer { text-align: center; color: #444; font-size: 0.8em; margin-top: 60px; }
-    .pendiente { border-left: 3px solid #f0d000; padding-left: 12px; }
     .pendiente-tag { background: #2a2a00; color: #f0d000; padding: 4px 10px; border-radius: 4px; font-size: 0.8em; font-weight: 600; margin-left: 12px; }
+    /* Editor panel */
+    .editor-panel { background: #161616; border: 2px solid #25D366; border-radius: 12px; padding: 24px; margin-top: 40px; }
+    .editor-panel h2 { color: #25D366; margin-bottom: 16px; font-size: 1.1em; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .form-grid.full { grid-template-columns: 1fr; }
+    label { display: block; color: #888; font-size: 0.8em; margin-bottom: 4px; }
+    input, select, textarea { width: 100%; padding: 10px 12px; background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 6px; color: #e0e0e0; font-size: 0.95em; font-family: inherit; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #25D366; }
+    button { background: #25D366; color: #000; border: none; padding: 12px 24px; border-radius: 6px; font-size: 0.95em; font-weight: 700; cursor: pointer; margin-top: 12px; }
+    button:hover { background: #1ebe5c; }
+    button:disabled { background: #444; color: #888; cursor: not-allowed; }
+    .btn-secondary { background: #333; color: #e0e0e0; }
+    .btn-secondary:hover { background: #444; }
+    #editorMsg { margin-top: 12px; padding: 10px; border-radius: 6px; font-size: 0.9em; display: none; }
+    .success { background: #0a2a1a; color: #00f060; border: 1px solid #00f060; }
+    .error { background: #2a0a0a; color: #f04040; border: 1px solid #f04040; }
     @media (max-width: 600px) {
-      .form-row { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>WOLFIM — Pipeline</h1>
-    <p class="subtitle">Inmobiliarias Córdoba | Abril 2026 | Actualizado: 20 de abril de 2026</p>
+    <p class="subtitle">Inmobiliarias Córdoba | Abril 2026 | <span id="ultimoUpdate">Último update: —</span></p>
 
     <div class="legend">
       <span><span class="status prospecto">PROSPECTO</span> = Lead nuevo</span>
@@ -73,7 +80,7 @@
         <tr><td style="color:#888">Trayectoria</td><td>+20 años</td></tr>
         <tr><td style="color:#888">Servicios</td><td>Venta y alquiler en Valle de Punilla</td></tr>
         <tr><td style="color:#888">Status</td><td><span class="status prospecto">PROSPECTO</span></td></tr>
-        <tr><td style="color:#888">Última acción</td><td>—</td></tr>
+        <tr><td style="color:#888">Última acción</td><td id="estrañy-accion">—</td></tr>
         <tr><td style="color:#888">Notas</td><td>+20 años en el mercado, NO invierte en web, mercado turístico</td></tr>
       </table>
     </div>
@@ -86,25 +93,13 @@
         <tr><td style="color:#888">Contacto</td><td>Eduardo Castillo (Arq.)</td></tr>
         <tr><td style="color:#888">Web</td><td>Ninguna — Solo Facebook + Instagram</td></tr>
         <tr><td style="color:#888">Servicios</td><td>Asesoría y venta de inmuebles</td></tr>
-        <tr><td style="color:#888">Status</td><td><span class="status sin-respuesta">SIN RESPUESTA</span></td></tr>
-        <tr><td style="color:#888">Última acción</td><td>2026-04-20 — Mensaje intro enviado</td></tr>
+        <tr><td style="color:#888">Status</td><td><span class="status sin-respuesta" id="castillo-status">SIN RESPUESTA</span></td></tr>
+        <tr><td style="color:#888">Última acción</td><td id="castillo-accion">2026-04-20 — Mensaje intro enviado</td></tr>
       </table>
     </div>
 
     <div class="card">
-      <h2>Target 3 — Marcos A.Paz Inmobiliaria <span class="pendiente-tag">⏳ PENDIENTE</span></h2>
-      <table>
-        <tr><td style="width:120px;color:#888">WhatsApp</td><td><a class="whatsapp" href="https://wa.me/5493541424541">3541-424541</a> / <a class="whatsapp" href="https://wa.me/5493516835501">351-683-5501</a></td></tr>
-        <tr><td style="color:#888">Ubicación</td><td>Villa Carlos Paz</td></tr>
-        <tr><td style="color:#888">Web</td><td>Ninguna — Solo Facebook (1.233 likes)</td></tr>
-        <tr><td style="color:#888">Servicios</td><td>Administración, tasaciones, ventas</td></tr>
-        <tr><td style="color:#888">Status</td><td><span class="status prospecto">PROSPECTO</span></td></tr>
-        <tr><td style="color:#888">Última acción</td><td>—</td></tr>
-      </table>
-    </div>
-
-    <div class="card">
-      <h2>Target 4 — JP Ortega Inmobiliaria</h2>
+      <h2>Target 3 — JP Ortega Inmobiliaria</h2>
       <table>
         <tr><td style="width:120px;color:#888">WhatsApp Ventas</td><td><a class="whatsapp" href="https://wa.me/5493541544000">3541-544000</a></td></tr>
         <tr><td style="color:#888">WhatsApp Alquileres</td><td><a class="whatsapp" href="https://wa.me/5493541747817">3541-747817</a></td></tr>
@@ -113,54 +108,62 @@
         <tr><td style="color:#888">Matrícula</td><td>MP CPI 6411</td></tr>
         <tr><td style="color:#888">Web</td><td>Solo Facebook + Instagram</td></tr>
         <tr><td style="color:#888">Servicios</td><td>Alquiler temporal, ventas, perito tasador</td></tr>
-        <tr><td style="color:#888">Status</td><td><span class="status sin-respuesta">SIN RESPUESTA</span></td></tr>
-        <tr><td style="color:#888">Última acción</td><td>2026-04-20 — Mensaje intro enviado</td></tr>
+        <tr><td style="color:#888">Status</td><td><span class="status sin-respuesta" id="jp-status">SIN RESPUESTA</span></td></tr>
+        <tr><td style="color:#888">Última acción</td><td id="jp-accion">2026-04-20 — Mensaje intro enviado</td></tr>
       </table>
     </div>
 
     <div class="actions">
       <h2>Próximas Acciones</h2>
       <div class="action-card">
-        <h3><span class="tag tag-inmobiliaria">URGENTE</span> Enviar mensaje intro a Estrañy y Marcos A.Paz</h3>
-        <p>Son los únicos dos que faltan. Mensaje listo más abajo.</p>
+        <h3><span class="tag tag-inmobiliaria">URGENTE</span> Enviar mensaje intro a Estrañy</h3>
+        <p>Es el único que falta. Mensaje listo abajo.</p>
       </div>
       <div class="action-card">
-        <h3><span class="tag tag-inmobiliaria">SEGUIMIENTO</span> Reenviar a Del Castillo y JP Ortega en 48-72hs</h3>
-        <p>Mensaje 2: "Hola [NOMBRE]! Reitero el mensaje de antes por si no les llegó. Sé que en Villa Carlos Paz el mercado turístico mueve mucho en verano, pero también hay consulta todo el año. Les ofrezco una landing page simple pero efectiva: foto principal, datos de contacto, WhatsApp directo y que aparezcan en Google. ¿Les interesa saber más? Juan"</p>
+        <h3><span class="tag tag-seguimiento">SEGUIMIENTO</span> Reenviar a Del Castillo y JP Ortega en 48-72hs</h3>
+        <p>Mensaje 2: "Hola! Reitero el mensaje de antes por si no les llegó. Sé que en Villa Carlos Paz el mercado turístico mueve todo el año. Les ofrezco una landing page simple: foto principal, datos de contacto, WhatsApp directo y presencia en Google. ¿Les interesa saber más? Juan"</p>
       </div>
     </div>
 
-    <div class="update-form">
-      <h2>Actualizar Status</h2>
-      <form id="updateForm">
-        <div class="form-row">
-          <div>
-            <label>Target</label>
-            <select id="target"><option value="estrañy">Estrañy</option><option value="castillo">Del Castillo</option><option value="marcos">Marcos A.Paz</option><option value="jp">JP Ortega</option></select>
-          </div>
-          <div>
-            <label>Nuevo Status</label>
-            <select id="status"><option value="PROSPECTO">PROSPECTO</option><option value="NEGOCIACIÓN">EN NEGOCIACIÓN</option><option value="CERADO">CERADO</option><option value="SIN RESPUESTA">SIN RESPUESTA</option></select>
-          </div>
-          <div>
-            <label>Fecha</label>
-            <input type="date" id="fecha-accion">
-          </div>
+    <div class="editor-panel">
+      <h2>✏️ Editor Directo — Actualizar Pipeline</h2>
+      <div class="form-grid">
+        <div>
+          <label>Target</label>
+          <select id="target">
+            <option value="estrañy">Estrañy</option>
+            <option value="castillo">Del Castillo</option>
+            <option value="jp">JP Ortega</option>
+          </select>
         </div>
-        <div class="form-row full">
-          <div>
-            <label>Notas / Acción tomada</label>
-            <textarea id="notas" rows="3" placeholder="Ej: Mensaje intro enviado por WhatsApp..."></textarea>
-          </div>
+        <div>
+          <label>Nuevo Status</label>
+          <select id="status">
+            <option value="PROSPECTO">PROSPECTO</option>
+            <option value="NEGOCIACIÓN">EN NEGOCIACIÓN</option>
+            <option value="CERADO">CERADO</option>
+            <option value="SIN RESPUESTA">SIN RESPUESTA</option>
+          </select>
         </div>
-        <button type="button" onclick="generarMensaje()">Generar actualización</button>
-      </form>
-      <div class="msg-box" id="msgBox">Completá el formulario y clickeá "Generar actualización" para ver el texto de actualización.</div>
+        <div>
+          <label>Fecha</label>
+          <input type="date" id="fecha">
+        </div>
+      </div>
+      <div class="form-grid full">
+        <div>
+          <label>Notas / Acción tomada</label>
+          <textarea id="notas" rows="2" placeholder="Ej: Mensaje intro enviado por WhatsApp..."></textarea>
+        </div>
+      </div>
+      <button id="btnUpdate" onclick="actualizarPipeline()">Actualizar</button>
+      <button class="btn-secondary" onclick="copiarMensaje()">Copiar update como texto</button>
+      <div id="editorMsg"></div>
     </div>
 
     <div style="margin-top:40px;padding:20px;background:#161616;border:1px solid #2a2a2a;border-radius:12px;">
       <h2 style="color:#fff;margin-bottom:12px;">Mensaje 1 — Para copiar y enviar</h2>
-      <div class="msg-box" id="msg1">Hola! 👋 Vi que están en Villa Carlos Paz.
+      <div class="msg-box">Hola! 👋 Vi que están en Villa Carlos Paz.
 
 Les consulto: ¿tienen página web donde la gente pueda ver las propiedades y contactarlos directo?
 
@@ -171,22 +174,96 @@ Lo pregunto porque trabajo con inmobiliarias帮她 armando landing pages con Wha
 Juan</div>
     </div>
 
-    <p class="footer">WOLFIM Pipeline — Compartido con Hermes Agent | Ziramog</p>
+    <p class="footer">WOLFIM Pipeline | Ziramog | GitHub Pages</p>
   </div>
 
   <script>
-    document.getElementById('fecha-accion').valueAsDate = new Date();
+    const TARGETS = {
+      estrañy: { status: 'estrañy-status', accion: 'estrañy-accion' },
+      castillo: { status: 'castillo-status', accion: 'castillo-accion' },
+      jp: { status: 'jp-status', accion: 'jp-accion' }
+    };
 
-    function generarMensaje() {
-      var t = document.getElementById('target').value;
-      var s = document.getElementById('status').value;
-      var f = document.getElementById('fecha-accion').value;
-      var n = document.getElementById('notas').value;
-      var ids = { estrañy: 'estrañy-ultima', castillo: 'castillo-ultima', marcos: 'marcos-ultima', jp: 'jp-ultima' };
-      var nombres = { estrañy: 'Estrañy', castillo: 'Del Castillo', marcos: 'Marcos A.Paz', jp: 'JP Ortega' };
-      var msg = '📌 UPDATE ' + f + '\n' + nombres[t].toUpperCase() + '\nNuevo status: ' + s + '\nAcción: ' + n + '\n\nPara aplicar este update, copiá este texto y mandámelo por chat para que actualice la página.';
-      document.getElementById('msgBox').textContent = msg;
+    const STATUS_CLASS = {
+      'PROSPECTO': 'prospecto',
+      'EN NEGOCIACIÓN': 'en-negociacion',
+      'CERADO': 'cerrado',
+      'SIN RESPUESTA': 'sin-respuesta'
+    };
+
+    document.getElementById('fecha').valueAsDate = new Date();
+
+    function actualizarPipeline() {
+      var target = document.getElementById('target').value;
+      var status = document.getElementById('status').value;
+      var fecha = document.getElementById('fecha').value;
+      var notas = document.getElementById('notas').value;
+
+      var ids = TARGETS[target];
+      if (!ids) return;
+
+      // Update status
+      var statusEl = document.getElementById(ids.status);
+      statusEl.className = 'status ' + STATUS_CLASS[status];
+      statusEl.textContent = status;
+
+      // Update action
+      var accionEl = document.getElementById(ids.accion);
+      accionEl.textContent = fecha + ' — ' + notas;
+
+      // Update last update
+      document.getElementById('ultimoUpdate').textContent = 'Último update: ' + fecha;
+
+      // Save to localStorage so we can recover
+      var data = JSON.parse(localStorage.getItem('wolfim_updates') || '{}');
+      data[target] = { status: status, fecha: fecha, notas: notas, updated: Date.now() };
+      localStorage.setItem('wolfim_updates', JSON.stringify(data));
+
+      // Show success
+      var msgEl = document.getElementById('editorMsg');
+      msgEl.className = 'success';
+      msgEl.textContent = '✅ Actualizado en pantalla! Ahora copiá el texto y mandámelo para persistir en GitHub.';
+      msgEl.style.display = 'block';
+
+      copiarMensaje();
     }
+
+    function copiarMensaje() {
+      var target = document.getElementById('target').value;
+      var status = document.getElementById('status').value;
+      var fecha = document.getElementById('fecha').value;
+      var notas = document.getElementById('notas').value;
+      var nombres = { estrañy: 'ESTRAÑY', castillo: 'DEL CASTILLO', jp: 'JP ORTEGA' };
+
+      var texto = '📌 UPDATE ' + fecha + '\n' + nombres[target] + '\nNuevo status: ' + status + '\nAcción: ' + notas + '\n\nPara aplicar este update, copiá este texto y mandámelo por chat.';
+
+      navigator.clipboard.writeText(texto).then(function() {
+        var msgEl = document.getElementById('editorMsg');
+        msgEl.className = 'success';
+        msgEl.textContent = '📋 Copiado al portapapeles! Mandámelo por chat para guardar en GitHub.';
+        msgEl.style.display = 'block';
+      }).catch(function() {
+        var msgEl = document.getElementById('editorMsg');
+        msgEl.className = 'error';
+        msgEl.textContent = texto;
+        msgEl.style.display = 'block';
+      });
+    }
+
+    // Restore from localStorage on load
+    window.onload = function() {
+      var data = JSON.parse(localStorage.getItem('wolfim_updates') || '{}');
+      for (var key in data) {
+        var item = data[key];
+        var ids = TARGETS[key];
+        if (ids && item.status) {
+          var statusEl = document.getElementById(ids.status);
+          statusEl.className = 'status ' + STATUS_CLASS[item.status];
+          statusEl.textContent = item.status;
+          document.getElementById(ids.accion).textContent = item.fecha + ' — ' + item.notas;
+        }
+      }
+    };
   </script>
 </body>
 </html>

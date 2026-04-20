@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WOLFIM — Pipeline Inmobiliarias Córdoba</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; padding: 40px 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { color: #fff; font-size: 1.8em; margin-bottom: 8px; }
+    .subtitle { color: #888; margin-bottom: 40px; font-size: 0.95em; }
+    .card { background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+    .card h2 { color: #fff; font-size: 1.1em; margin-bottom: 16px; border-bottom: 1px solid #2a2a2a; padding-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; color: #888; font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 12px; border-bottom: 1px solid #2a2a2a; }
+    td { padding: 14px 12px; border-bottom: 1px solid #222; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background: #1a1a1a; }
+    .status { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .prospecto { background: #2a2a00; color: #f0d000; }
+    .en-negociacion { background: #2a1a00; color: #f08000; }
+    .cerrado { background: #002a00; color: #00f060; }
+    .sin-respuesta { background: #2a0a0a; color: #f04040; }
+    .whatsapp { color: #25D366; text-decoration: none; }
+    .whatsapp:hover { text-decoration: underline; }
+    .tag { display: inline-block; background: #222; color: #aaa; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 6px; margin-top: 6px; }
+    .actions { margin-top: 40px; }
+    .actions h2 { color: #fff; margin-bottom: 16px; }
+    .action-card { background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 20px; margin-bottom: 12px; }
+    .action-card h3 { color: #fff; font-size: 1em; margin-bottom: 8px; }
+    .action-card p { color: #888; font-size: 0.9em; line-height: 1.5; }
+    .action-card .tag-inmobiliaria { background: #1a2a1a; color: #00f060; }
+    .update-form { background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; padding: 24px; margin-top: 40px; }
+    .update-form h2 { color: #fff; margin-bottom: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .form-row.full { grid-template-columns: 1fr; }
+    label { display: block; color: #888; font-size: 0.8em; margin-bottom: 4px; }
+    input, select, textarea { width: 100%; padding: 10px 12px; background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 6px; color: #e0e0e0; font-size: 0.95em; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #444; }
+    button { background: #25D366; color: #fff; border: none; padding: 12px 24px; border-radius: 6px; font-size: 0.95em; font-weight: 600; cursor: pointer; margin-top: 12px; }
+    button:hover { background: #1ebe5c; }
+    .msg-box { background: #0a0a0a; border: 1px solid #2a2a2a; border-radius: 6px; padding: 12px; margin-top: 20px; font-family: monospace; font-size: 0.9em; color: #888; white-space: pre-wrap; }
+    .legend { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+    .legend span { font-size: 0.85em; }
+    .footer { text-align: center; color: #444; font-size: 0.8em; margin-top: 60px; }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>WOLFIM — Pipeline</h1>
+    <p class="subtitle">Inmobiliarias Córdoba | Abril 2026 | Actualizado: <span id="fecha"></span></p>
+
+    <div class="legend">
+      <span><span class="status prospecto">PROSPECTO</span> = Lead nuevo</span>
+      <span><span class="status en-negociacion">NEGOCIACIÓN</span> = Mostró interés</span>
+      <span><span class="status cerrado">CERADO</span> = Cliente nuevo</span>
+      <span><span class="status sin-respuesta">SIN RESPUESTA</span> = No respondió</span>
+    </div>
+
+    <div class="card">
+      <h2>Target 1 — Inmobiliaria Estrañy ⭐ PRIORIDAD</h2>
+      <table>
+        <tr><td style="width:120px;color:#888">WhatsApp</td><td><a class="whatsapp" href="https://wa.me/5493541588489">3541-588489</a></td></tr>
+        <tr><td style="color:#888">Ubicación</td><td>Hipólito Yrigoyen 48, Villa Carlos Paz</td></tr>
+        <tr><td style="color:#888">Contacto</td><td>Alejandra Estrañy (Martillera Matriculada)</td></tr>
+        <tr><td style="color:#888">Web</td><td>Ninguna — Solo Facebook + Instagram</td></tr>
+        <tr><td style="color:#888">Trayectoria</td><td>+20 años</td></tr>
+        <tr><td style="color:#888">Servicios</td><td>Venta y alquiler en Valle de Punilla</td></tr>
+        <tr><td style="color:#888">Status</td><td><span class="status prospecto">PROSPECTO</span></td></tr>
+        <tr><td style="color:#888">Última acción</td><td><span id="estrañy-ultima">—</span></td></tr>
+        <tr><td style="color:#888">Notas</td><td>+20 años en el mercado, NO invierte en web, mercado turístico</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Target 2 — Inmobiliaria del Castillo</h2>
+      <table>
+        <tr><td style="width:120px;color:#888">WhatsApp</td><td><a class="whatsapp" href="https://wa.me/5493541557179">3541-557179</a> / <a class="whatsapp" href="https://wa.me/5493513513001">351-351-3001</a></td></tr>
+        <tr><td style="color:#888">Ubicación</td><td>Villa Carlos Paz</td></tr>
+        <tr><td style="color:#888">Contacto</td><td>Eduardo Castillo (Arq.)</td></tr>
+        <tr><td style="color:#888">Web</td><td>Ninguna — Solo Facebook + Instagram</td></tr>
+        <tr><td style="color:#888">Servicios</td><td>Asesoría y venta de inmuebles</td></tr>
+        <tr><td style="color:#888">Status</td><td><span class="status prospecto">PROSPECTO</span></td></tr>
+        <tr><td style="color:#888">Última acción</td><td><span id="castillo-ultima">—</span></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Target 3 — Marcos A.Paz Inmobiliaria</h2>
+      <table>
+        <tr><td style="width:120px;color:#888">WhatsApp</td><td><a class="whatsapp" href="https://wa.me/5493541424541">3541-424541</a> / <a class="whatsapp" href="https://wa.me/5493516835501">351-683-5501</a></td></tr>
+        <tr><td style="color:#888">Ubicación</td><td>Villa Carlos Paz</td></tr>
+        <tr><td style="color:#888">Web</td><td>Ninguna — Solo Facebook (1.233 likes)</td></tr>
+        <tr><td style="color:#888">Servicios</td><td>Administración, tasaciones, ventas</td></tr>
+        <tr><td style="color:#888">Status</td><td><span class="status prospecto">PROSPECTO</span></td></tr>
+        <tr><td style="color:#888">Última acción</td><td><span id="marcos-ultima">—</span></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Target 4 — JP Ortega Inmobiliaria</h2>
+      <table>
+        <tr><td style="width:120px;color:#888">WhatsApp Ventas</td><td><a class="whatsapp" href="https://wa.me/5493541544000">3541-544000</a></td></tr>
+        <tr><td style="color:#888">WhatsApp Alquileres</td><td><a class="whatsapp" href="https://wa.me/5493541747817">3541-747817</a></td></tr>
+        <tr><td style="color:#888">Celular</td><td>+549 351 593 2001</td></tr>
+        <tr><td style="color:#888">Instagram</td><td>@jp.ortega.inmobiliaria</td></tr>
+        <tr><td style="color:#888">Matrícula</td><td>MP CPI 6411</td></tr>
+        <tr><td style="color:#888">Web</td><td>Solo Facebook + Instagram</td></tr>
+        <tr><td style="color:#888">Servicios</td><td>Alquiler temporal, ventas, perito tasador</td></tr>
+        <tr><td style="color:#888">Status</td><td><span class="status prospecto">PROSPECTO</span></td></tr>
+        <tr><td style="color:#888">Última acción</td><td><span id="jp-ultima">—</span></td></tr>
+      </table>
+    </div>
+
+    <div class="actions">
+      <h2>Acciones Pendientes</h2>
+      <div class="action-card">
+        <h3><span class="tag tag-inmobiliaria">INMOBILIARIA</span> Enviar mensaje intro a los 4 targets</h3>
+        <p>Mensaje: "Hola! Vi que están en Villa Carlos Paz. Les consulto: ¿tienen página web donde la gente pueda ver las propiedades y contactarlos directo? Lo pregunto porque trabajo con inmobiliarias帮她 armando landing pages con WhatsApp integrado — para que cuando alguien busque 'inmobiliaria en [ciudad]' en Google, los encuentren a ustedes. ¿Estarían interesados en una cotización sin compromiso? Juan"</p>
+      </div>
+      <div class="action-card">
+        <h3><span class="tag tag-inmobiliaria">INMOBILIARIA</span> Seguimiento 48-72hs después</h3>
+        <p>Segundo mensaje si no responden: "Hola [NOMBRE]! Reitero el mensaje de antes por si no les llegó. Sé que en Villa Carlos Paz el mercado turístico mueve mucho en verano, pero también hay consulta todo el año. Les ofrezco una landing page simple pero efectiva: foto principal, datos de contacto, WhatsApp directo y que aparezcan en Google. ¿Les interesa saber más? Juan"</p>
+      </div>
+      <div class="action-card">
+        <h3><span class="tag tag-inmobiliaria">INMOBILIARIA</span> Mensaje de cierre si hay interés</h3>
+        <p>Precio para mostrar: "Entiendo que es un momento de evaluar. Te dejo el rango de precio para que tengas: USD 150-250 dependiendo de cuántas propiedades muestres. Incluye hosting, SSL, WhatsApp Business configurado y posicionamiento local en Google. Si después de eso no te sirve, no hay problema. Pero vale la pena tener algo mejor que solo Facebook para las consultas. Juan"</p>
+      </div>
+    </div>
+
+    <div class="update-form">
+      <h2>Actualizar Status</h2>
+      <form id="updateForm">
+        <div class="form-row">
+          <div>
+            <label>Target</label>
+            <select id="target"><option value="estrañy">Estrañy</option><option value="castillo">Del Castillo</option><option value="marcos">Marcos A.Paz</option><option value="jp">JP Ortega</option></select>
+          </div>
+          <div>
+            <label>Nuevo Status</label>
+            <select id="status"><option value="PROSPECTO">PROSPECTO</option><option value="NEGOCIACIÓN">EN NEGOCIACIÓN</option><option value="CERADO">CERADO</option><option value="SIN RESPUESTA">SIN RESPUESTA</option></select>
+          </div>
+          <div>
+            <label>Fecha</label>
+            <input type="date" id="fecha-accion">
+          </div>
+        </div>
+        <div class="form-row full">
+          <div>
+            <label>Notas / Acción tomada</label>
+            <textarea id="notas" rows="3" placeholder="Ej: Mensaje intro enviado por WhatsApp..."></textarea>
+          </div>
+        </div>
+        <button type="button" onclick="generarMensaje()">Generar actualización</button>
+      </form>
+      <div class="msg-box" id="msgBox">Completá el formulario y clickeá "Generar actualización" para ver el texto de actualización.</div>
+    </div>
+
+    <div style="margin-top:40px;padding:20px;background:#161616;border:1px solid #2a2a2a;border-radius:12px;">
+      <h2 style="color:#fff;margin-bottom:12px;">Mensaje 1 — Para copiar y enviar</h2>
+      <div class="msg-box" id="msg1">Hola! 👋 Vi que están en Villa Carlos Paz.
+
+Les consulto: ¿tienen página web donde la gente pueda ver las propiedades y contactarlos directo?
+
+Lo pregunto porque trabajo con inmobiliarias帮她 armando landing pages con WhatsApp integrado — para que cuando alguien busque "inmobiliaria en [ciudad]" en Google, los encuentren a ustedes.
+
+¿Estarían interesados en una cotización sin compromiso?
+
+Juan</div>
+    </div>
+
+    <p class="footer">WOLFIM Pipeline — Compartido con Hermes Agent | Ziramog</p>
+  </div>
+
+  <script>
+    document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: 'long', year: 'numeric' });
+    document.getElementById('fecha-accion').valueAsDate = new Date();
+
+    function generarMensaje() {
+      var t = document.getElementById('target').value;
+      var s = document.getElementById('status').value;
+      var f = document.getElementById('fecha-accion').value;
+      var n = document.getElementById('notas').value;
+      var ids = { estrañy: 'estrañy-ultima', castillo: 'castillo-ultima', marcos: 'marcos-ultima', jp: 'jp-ultima' };
+      var nombres = { estrañy: 'Estrañy', castillo: 'Del Castillo', marcos: 'Marcos A.Paz', jp: 'JP Ortega' };
+      var msg = '📌 UPDATE ' + f + '\n' + nombres[t].toUpperCase() + '\nNuevo status: ' + s + '\nAcción: ' + n + '\n\nPara aplicar este update, copiá este texto y mandámelo por chat para que actualice la página.';
+      document.getElementById('msgBox').textContent = msg;
+    }
+  </script>
+</body>
+</html>
